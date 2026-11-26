@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'mupm_playlists_v2'
+const LIBRARY_ORDER_KEY = 'mupm_library_order_v2'
 
 export const DEFAULT_PLAYLISTS = [
   {
@@ -48,5 +49,33 @@ export function savePlaylists(playlists) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(playlists))
   } catch (err) {
     console.error('Failed to save playlists to localStorage:', err)
+  }
+}
+
+/**
+ * Get saved order of songs in Library
+ * @returns {Array<string> | null}
+ */
+export function getSavedLibraryOrder() {
+  try {
+    const raw = localStorage.getItem(LIBRARY_ORDER_KEY)
+    if (!raw) return null
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : null
+  } catch (err) {
+    console.error('Failed to parse library order from localStorage:', err)
+    return null
+  }
+}
+
+/**
+ * Save custom order of songs in Library
+ * @param {Array<string>} songIds
+ */
+export function saveLibraryOrder(songIds) {
+  try {
+    localStorage.setItem(LIBRARY_ORDER_KEY, JSON.stringify(songIds))
+  } catch (err) {
+    console.error('Failed to save library order to localStorage:', err)
   }
 }

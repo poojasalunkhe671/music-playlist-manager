@@ -9,7 +9,7 @@ import PlaylistModal from './components/PlaylistModal'
 import ConfirmModal from './components/ConfirmModal'
 import AddToPlaylistModal from './components/AddToPlaylistModal'
 import Toast from './components/common/Toast'
-import { getSavedPlaylists, savePlaylists } from './utils/storage'
+import { getSavedPlaylists, savePlaylists, getSavedLibraryOrder, saveLibraryOrder } from './utils/storage'
 
 export default function App() {
   // Songs loaded from public/songs.json via Axios
@@ -73,10 +73,28 @@ export default function App() {
     try {
       const response = await axios.get('/songs.json')
       if (Array.isArray(response.data)) {
-        setSongs(response.data)
+        // Check for saved custom order in localStorage
+        const savedOrder = getSavedLibraryOrder()
+        let orderedSongs = response.data
+
+        if (savedOrder && Array.isArray(savedOrder) && savedOrder.length > 0) {
+          const songMap = new Map(response.data.map((s) => [s.id, s]))
+          const sorted = []
+          savedOrder.forEach((id) => {
+            if (songMap.has(id)) {
+              sorted.push(songMap.get(id))
+              songMap.delete(id)
+            }
+          })
+          // Append any remaining songs
+          songMap.forEach((s) => sorted.push(s))
+          orderedSongs = sorted
+        }
+
+        setSongs(orderedSongs)
         // Set initial queue to all songs
         if (activeQueue.length === 0) {
-          setActiveQueue(response.data.map((s) => s.id))
+          setActiveQueue(orderedSongs.map((s) => s.id))
         }
       } else {
         throw new Error('Invalid song data structure received')
@@ -278,14 +296,17 @@ export default function App() {
 
   // Reorder songs in playlist
   const handleReorderPlaylistSongs = (playlistId, newSongIds) => {
-    setPlaylists((prev) =>
-      prev.map((p) => (p.id === playlistId ? { ...p, songIds: newSongIds } : p))
-    )
+    setPlaylists((prev) => {
+      const updated = prev.map((p) => (p.id === playlistId ? { ...p, songIds: newSongIds } : p))
+      savePlaylists(updated)
+      return updated
+    })
   }
 
   // Reorder songs in library
   const handleReorderLibrarySongs = (newSongs) => {
     setSongs(newSongs)
+    saveLibraryOrder(newSongs.map((s) => s.id))
   }
 
   const activePlaylist = playlists.find((p) => p.id === selectedPlaylistId) || null
