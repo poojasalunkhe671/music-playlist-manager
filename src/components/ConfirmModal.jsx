@@ -24,8 +24,12 @@ export default function ConfirmModal({
           {message}
         </p>
 
-        <div className="flex items-center justify-center gap-3 w-full">
-          <Button variant="secondary" onClick={onClose} className="flex-1">
+        <div className="flex items-center justify-center gap-2.5 sm:gap-3 w-full">
+          <Button
+            variant="secondary"
+            onClick={onClose}
+            className="flex-1 py-2 sm:py-2.5 px-3 sm:px-5 text-xs sm:text-sm whitespace-nowrap"
+          >
             {cancelText}
           </Button>
           <Button
@@ -34,7 +38,7 @@ export default function ConfirmModal({
               onConfirm()
               onClose()
             }}
-            className="flex-1"
+            className="flex-1 py-2 sm:py-2.5 px-3 sm:px-5 text-xs sm:text-sm whitespace-nowrap"
           >
             {confirmText}
           </Button>
