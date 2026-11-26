@@ -7,7 +7,8 @@ import {
   ListMusic,
   FolderPlus,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Music
 } from 'lucide-react'
 import { formatPlaylistDetails } from '../utils/formatters'
 import SongRow from './SongRow'
@@ -44,6 +45,9 @@ export default function PlaylistView({
 
   const totalSeconds = playlistSongs.reduce((sum, s) => sum + (s.duration || 0), 0)
   const detailsSummary = formatPlaylistDetails(playlistSongs.length, totalSeconds)
+
+  const topSong = playlistSongs[0]
+  const heroCoverUrl = topSong?.coverUrl || null
 
   // Move up handler
   const handleMoveUp = (index) => {
@@ -131,7 +135,7 @@ export default function PlaylistView({
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Playlist Selector Chips (Spotify Pills) */}
+      {/* Playlist Selector Chips */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none no-scrollbar">
         {playlists.map((playlist) => {
           const isSelected = selectedPlaylist?.id === playlist.id
@@ -171,12 +175,30 @@ export default function PlaylistView({
         </button>
       </div>
 
-      {/* Selected Playlist Hero Details Card (Spotify Header Style) */}
+      {/* Selected Playlist Hero Details Card (Spotify Header Style with Cover Image) */}
       {selectedPlaylist && (
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-[#1e3a2f] via-[#181818] to-[#121212] border border-white/5 p-5 sm:p-7 shadow-2xl">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-            {/* Playlist Info */}
-            <div className="min-w-0 flex-1">
+          <div className="flex flex-col sm:flex-row items-center sm:items-end gap-5 sm:gap-6">
+            {/* Spotify Album Cover Art (Desktop & Mobile) */}
+            <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-xl overflow-hidden bg-[#242424] shadow-2xl flex-shrink-0 border border-white/10 relative group">
+              {heroCoverUrl ? (
+                <img
+                  src={heroCoverUrl}
+                  alt={selectedPlaylist.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-emerald-800 to-teal-950 text-white">
+                  <Music size={40} className="mb-2 opacity-80" />
+                  <span className="text-xs font-bold px-2 text-center truncate max-w-full">
+                    {selectedPlaylist.name}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Playlist Info & Metadata */}
+            <div className="min-w-0 flex-1 text-center sm:text-left">
               <span className="text-[11px] uppercase font-bold tracking-wider text-[#b3b3b3]">
                 Playlist
               </span>
@@ -186,54 +208,51 @@ export default function PlaylistView({
               </h2>
 
               {selectedPlaylist.description && (
-                <p className="text-xs text-[#b3b3b3] mt-2 max-w-xl">
+                <p className="text-xs text-[#b3b3b3] mt-2 max-w-xl line-clamp-2">
                   {selectedPlaylist.description}
                 </p>
               )}
 
               {/* Requirement #5: show song count and total duration (e.g. "8 songs · 32 min") */}
-              <div className="flex items-center gap-2 mt-4 text-xs text-white">
+              <div className="flex items-center justify-center sm:justify-start gap-2 mt-3 text-xs text-white">
                 <span className="font-semibold">{detailsSummary}</span>
                 <span className="text-[#727272] hidden sm:inline">• Drag songs or use arrow buttons to reorder</span>
               </div>
-            </div>
 
-            {/* Actions Toolbar */}
-            <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
-              {/* Play Entire Playlist - Iconic Spotify Green Action */}
-              <Button
-                size="md"
-                variant="primary"
-                onClick={() => onPlayEntirePlaylist(selectedPlaylist)}
-                disabled={playlistSongs.length === 0}
-                icon={<Play size={18} fill="currentColor" />}
-                title={playlistSongs.length === 0 ? 'Playlist is empty' : 'Play all songs'}
-                className="shadow-xl"
-              >
-                Play
-              </Button>
+              {/* Actions Toolbar */}
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-4">
+                <Button
+                  size="md"
+                  variant="primary"
+                  onClick={() => onPlayEntirePlaylist(selectedPlaylist)}
+                  disabled={playlistSongs.length === 0}
+                  icon={<Play size={18} fill="currentColor" />}
+                  title={playlistSongs.length === 0 ? 'Playlist is empty' : 'Play all songs'}
+                  className="shadow-xl"
+                >
+                  Play
+                </Button>
 
-              {/* Rename */}
-              <Button
-                size="sm"
-                variant="secondary"
-                icon={<Edit2 size={14} />}
-                onClick={() => onRenamePlaylistRequest(selectedPlaylist)}
-                title="Rename playlist"
-              >
-                Rename
-              </Button>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  icon={<Edit2 size={14} />}
+                  onClick={() => onRenamePlaylistRequest(selectedPlaylist)}
+                  title="Rename playlist"
+                >
+                  Rename
+                </Button>
 
-              {/* Delete */}
-              <Button
-                size="sm"
-                variant="dangerGhost"
-                icon={<Trash2 size={14} />}
-                onClick={() => onDeletePlaylistRequest(selectedPlaylist)}
-                title="Delete playlist"
-              >
-                Delete
-              </Button>
+                <Button
+                  size="sm"
+                  variant="dangerGhost"
+                  icon={<Trash2 size={14} />}
+                  onClick={() => onDeletePlaylistRequest(selectedPlaylist)}
+                  title="Delete playlist"
+                >
+                  Delete
+                </Button>
+              </div>
             </div>
           </div>
         </div>

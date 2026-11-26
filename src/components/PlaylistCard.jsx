@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Play, Music, Edit2, Trash2 } from 'lucide-react'
 import { formatPlaylistDetails } from '../utils/formatters'
 import Button from './common/Button'
@@ -13,6 +13,8 @@ export default function PlaylistCard({
   onRename,
   onDelete
 }) {
+  const [imageError, setImageError] = useState(false)
+
   if (!playlist) return null
 
   // Calculate song count and total duration
@@ -24,8 +26,9 @@ export default function PlaylistCard({
   const totalSeconds = playlistSongs.reduce((acc, song) => acc + (song.duration || 0), 0)
   const detailsText = formatPlaylistDetails(songCount, totalSeconds)
 
+  const topSong = playlistSongs[0]
   const primaryGradient =
-    playlistSongs[0]?.gradient || 'from-emerald-700 via-teal-800 to-slate-900'
+    topSong?.gradient || 'from-emerald-700 via-teal-800 to-slate-900'
 
   return (
     <div
@@ -36,37 +39,47 @@ export default function PlaylistCard({
           : 'bg-[#181818] hover:bg-[#282828] border border-transparent shadow-md hover:shadow-2xl'
       }`}
     >
-      {/* Artwork Thumbnail with Spotify Green Quick Play button */}
+      {/* Artwork Thumbnail with Image & Spotify Green Quick Play button */}
       <div className="relative aspect-square w-full rounded-lg overflow-hidden mb-3 bg-[#282828] shadow-md">
-        <div
-          className={`w-full h-full bg-gradient-to-br ${primaryGradient} flex items-center justify-center p-3 relative`}
-        >
-          <div className="relative z-10 flex flex-col items-center justify-center text-center">
-            <div className="w-12 h-12 rounded-2xl bg-black/20 backdrop-blur-md flex items-center justify-center text-white shadow-lg mb-1">
-              <Music size={24} />
-            </div>
-            <span className="text-[11px] font-semibold text-white/90 max-w-[120px] truncate">
-              {playlist.name}
-            </span>
-          </div>
-
-          {/* Spotify signature green floating play button */}
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation()
-              if (songCount > 0 && onPlay) {
-                onPlay(playlist)
-              }
-            }}
-            disabled={songCount === 0}
-            title={songCount === 0 ? 'Add songs first' : 'Play playlist'}
-            aria-label="Play playlist"
-            className="absolute bottom-3 right-3 w-12 h-12 rounded-full bg-[#1ed760] hover:bg-[#1fdf64] hover:scale-105 active:scale-95 text-black shadow-xl flex items-center justify-center translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 disabled:opacity-0"
+        {topSong?.coverUrl && !imageError ? (
+          <img
+            src={topSong.coverUrl}
+            alt={playlist.name}
+            onError={() => setImageError(true)}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+          />
+        ) : (
+          <div
+            className={`w-full h-full bg-gradient-to-br ${primaryGradient} flex items-center justify-center p-3 relative`}
           >
-            <Play size={20} className="translate-x-0.5" fill="currentColor" />
-          </button>
-        </div>
+            <div className="relative z-10 flex flex-col items-center justify-center text-center">
+              <div className="w-12 h-12 rounded-2xl bg-black/20 backdrop-blur-md flex items-center justify-center text-white shadow-lg mb-1">
+                <Music size={24} />
+              </div>
+              <span className="text-[11px] font-semibold text-white/90 max-w-[120px] truncate">
+                {playlist.name}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Spotify signature green floating play button */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            if (songCount > 0 && onPlay) {
+              onPlay(playlist)
+            }
+          }}
+          disabled={songCount === 0}
+          title={songCount === 0 ? 'Add songs first' : 'Play playlist'}
+          aria-label="Play playlist"
+          className="absolute bottom-3 right-3 w-12 h-12 rounded-full bg-[#1ed760] hover:bg-[#1fdf64] hover:scale-105 active:scale-95 text-black shadow-2xl flex items-center justify-center translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 disabled:opacity-0 z-20"
+        >
+          <Play size={20} className="translate-x-0.5" fill="currentColor" />
+        </button>
       </div>
 
       {/* Title & Metadata */}

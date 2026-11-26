@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { useEffect } from 'react'
 import { X } from 'lucide-react'
 
 export default function Modal({
@@ -10,7 +11,6 @@ export default function Modal({
   maxWidth = 'max-w-md',
   showClose = true
 }) {
-  // Handle ESC key press
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === 'Escape' && isOpen) {
@@ -33,36 +33,36 @@ export default function Modal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop with blur */}
       <div
-        className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity duration-300"
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Modal Dialog Card */}
+      {/* Modal Dialog Card (Spotify Dark) */}
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className={`relative w-full ${maxWidth} bg-[#111625] border border-slate-700/80 rounded-2xl shadow-2xl shadow-black/80 overflow-hidden transform transition-all z-10`}
+        className={`relative w-full ${maxWidth} bg-[#181818] border border-white/10 rounded-2xl shadow-2xl shadow-black overflow-hidden transform transition-all z-10`}
       >
         {/* Header */}
         {(title || showClose) && (
-          <div className="flex items-start justify-between p-5 border-b border-slate-800/80">
+          <div className="flex items-start justify-between p-5 border-b border-white/5">
             <div>
               {title && (
-                <h3 id="modal-title" className="text-lg font-semibold text-slate-100 tracking-tight">
+                <h3 id="modal-title" className="text-lg font-bold text-white tracking-tight">
                   {title}
                 </h3>
               )}
               {subtitle && (
-                <p className="text-xs text-slate-400 mt-0.5">{subtitle}</p>
+                <p className="text-xs text-[#b3b3b3] mt-0.5">{subtitle}</p>
               )}
             </div>
             {showClose && (
               <button
                 type="button"
                 onClick={onClose}
-                className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+                className="text-[#b3b3b3] hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors"
                 aria-label="Close dialog"
               >
                 <X size={18} />

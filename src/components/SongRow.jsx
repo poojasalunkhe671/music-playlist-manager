@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Play, Pause, Plus, Trash2, ChevronUp, ChevronDown, GripVertical, Check } from 'lucide-react'
 import { formatDuration } from '../utils/formatters'
 import Badge from './common/Badge'
@@ -25,6 +25,8 @@ export default function SongRow({
   onDragEnd,
   isDragOver = false
 }) {
+  const [imageError, setImageError] = useState(false)
+
   if (!song) return null
 
   const rowGradient = song.gradient || 'from-emerald-700 to-teal-900'
@@ -36,14 +38,14 @@ export default function SongRow({
       onDragOver={onDragOver}
       onDrop={onDrop}
       onDragEnd={onDragEnd}
-      className={`group relative flex items-center justify-between p-2.5 sm:px-4 sm:py-2.5 rounded-lg transition-colors ${
+      className={`group relative flex items-center justify-between p-2 sm:px-4 sm:py-2.5 rounded-lg transition-colors ${
         isCurrentSong
           ? 'bg-[#282828] text-[#1ed760]'
           : 'hover:bg-[#2a2a2a]/60 text-white'
       } ${isDragOver ? 'border-t-2 border-t-[#1ed760] bg-[#1ed760]/10' : ''}`}
     >
-      {/* Left section: drag handle (if playlist) + index / play button + artwork + title & artist */}
-      <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1 mr-2">
+      {/* Left section: drag handle (if playlist) + index / play button + cover image + title & artist */}
+      <div className="flex items-center gap-2.5 sm:gap-4 min-w-0 flex-1 mr-2">
         {/* Drag handle on playlist mode */}
         {mode === 'playlist' && (
           <div
@@ -84,13 +86,25 @@ export default function SongRow({
           </button>
         </div>
 
-        {/* Song artwork gradient preview */}
-        <div
-          className={`w-10 h-10 rounded-md bg-gradient-to-br ${rowGradient} flex-shrink-0 flex items-center justify-center text-white/90 shadow-sm border border-white/5`}
-        >
-          <span className="text-xs font-bold tracking-tight">
-            {song.title?.slice(0, 2).toUpperCase()}
-          </span>
+        {/* Music Album Cover Image (Desktop & Mobile) */}
+        <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-md overflow-hidden bg-[#282828] flex-shrink-0 relative shadow-sm border border-white/5">
+          {song.coverUrl && !imageError ? (
+            <img
+              src={song.coverUrl}
+              alt={song.title}
+              onError={() => setImageError(true)}
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+            />
+          ) : (
+            <div
+              className={`w-full h-full bg-gradient-to-br ${rowGradient} flex items-center justify-center text-white/90`}
+            >
+              <span className="text-xs font-bold tracking-tight">
+                {song.title?.slice(0, 2).toUpperCase()}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Title, Artist, and Mobile Genre/Duration */}
@@ -158,7 +172,7 @@ export default function SongRow({
             {/* Move Up Button */}
             <button
               type="button"
-              onClick={() => handleMoveUp ? onMoveUp(index) : null}
+              onClick={() => onMoveUp && onMoveUp(index)}
               disabled={!canMoveUp}
               title="Move Up"
               aria-label="Move Up"
@@ -170,7 +184,7 @@ export default function SongRow({
             {/* Move Down Button */}
             <button
               type="button"
-              onClick={() => handleMoveDown ? onMoveDown(index) : null}
+              onClick={() => onMoveDown && onMoveDown(index)}
               disabled={!canMoveDown}
               title="Move Down"
               aria-label="Move Down"

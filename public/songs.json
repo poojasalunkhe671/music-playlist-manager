@@ -6,7 +6,8 @@
     "genre": "Synthwave",
     "duration": 224,
     "album": "Neon Dreams",
-    "gradient": "from-purple-500 to-indigo-600"
+    "gradient": "from-purple-500 to-indigo-600",
+    "coverUrl": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-2",
@@ -15,7 +16,8 @@
     "genre": "Lo-Fi",
     "duration": 168,
     "album": "Morning Drizzle",
-    "gradient": "from-amber-500 to-rose-500"
+    "gradient": "from-amber-500 to-rose-500",
+    "coverUrl": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-3",
@@ -24,7 +26,8 @@
     "genre": "Electronic",
     "duration": 252,
     "album": "Kinetic Waves",
-    "gradient": "from-cyan-400 to-blue-600"
+    "gradient": "from-cyan-400 to-blue-600",
+    "coverUrl": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-4",
@@ -33,7 +36,8 @@
     "genre": "R&B",
     "duration": 195,
     "album": "Soul Reflections",
-    "gradient": "from-pink-500 to-rose-700"
+    "gradient": "from-pink-500 to-rose-700",
+    "coverUrl": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-5",
@@ -42,7 +46,8 @@
     "genre": "Indie",
     "duration": 240,
     "album": "Northern Tales",
-    "gradient": "from-emerald-400 to-teal-700"
+    "gradient": "from-emerald-400 to-teal-700",
+    "coverUrl": "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-6",
@@ -51,7 +56,8 @@
     "genre": "Synthwave",
     "duration": 286,
     "album": "Orbit 9",
-    "gradient": "from-violet-600 to-fuchsia-600"
+    "gradient": "from-violet-600 to-fuchsia-600",
+    "coverUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-7",
@@ -60,7 +66,8 @@
     "genre": "Pop",
     "duration": 210,
     "album": "Sunburst",
-    "gradient": "from-yellow-400 to-orange-600"
+    "gradient": "from-yellow-400 to-orange-600",
+    "coverUrl": "https://images.unsplash.com/photo-1511735111819-9a3f7709049c?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-8",
@@ -69,7 +76,8 @@
     "genre": "Jazz",
     "duration": 315,
     "album": "Late Night in Harlem",
-    "gradient": "from-blue-600 to-indigo-900"
+    "gradient": "from-blue-600 to-indigo-900",
+    "coverUrl": "https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-9",
@@ -78,7 +86,8 @@
     "genre": "Rock",
     "duration": 234,
     "album": "Redline",
-    "gradient": "from-red-600 to-amber-700"
+    "gradient": "from-red-600 to-amber-700",
+    "coverUrl": "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-10",
@@ -87,7 +96,8 @@
     "genre": "Ambient",
     "duration": 340,
     "album": "Void Reverie",
-    "gradient": "from-slate-700 to-cyan-900"
+    "gradient": "from-slate-700 to-cyan-900",
+    "coverUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-11",
@@ -96,7 +106,8 @@
     "genre": "Classical",
     "duration": 182,
     "album": "Seasons in Bloom",
-    "gradient": "from-rose-300 to-pink-600"
+    "gradient": "from-rose-300 to-pink-600",
+    "coverUrl": "https://images.unsplash.com/photo-1520523839898-507127c37130?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-12",
@@ -105,7 +116,8 @@
     "genre": "R&B",
     "duration": 218,
     "album": "Dusk & Honey",
-    "gradient": "from-fuchsia-500 to-purple-800"
+    "gradient": "from-fuchsia-500 to-purple-800",
+    "coverUrl": "https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-13",
@@ -114,7 +126,8 @@
     "genre": "Lo-Fi",
     "duration": 154,
     "album": "Study Sessions Vol. 4",
-    "gradient": "from-stone-500 to-orange-700"
+    "gradient": "from-stone-500 to-orange-700",
+    "coverUrl": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-14",
@@ -123,7 +136,8 @@
     "genre": "Electronic",
     "duration": 270,
     "album": "Sub-Atomic",
-    "gradient": "from-teal-400 to-blue-700"
+    "gradient": "from-teal-400 to-blue-700",
+    "coverUrl": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-15",
@@ -132,7 +146,8 @@
     "genre": "Indie",
     "duration": 205,
     "album": "Canyon Shadows",
-    "gradient": "from-orange-400 to-stone-700"
+    "gradient": "from-orange-400 to-stone-700",
+    "coverUrl": "https://images.unsplash.com/photo-1485579149621-3123dd979885?auto=format&fit=crop&w=300&q=80"
   },
   {
     "id": "song-16",
@@ -141,6 +156,7 @@
     "genre": "Synthwave",
     "duration": 242,
     "album": "1984 Drive",
-    "gradient": "from-pink-600 to-purple-900"
+    "gradient": "from-pink-600 to-purple-900",
+    "coverUrl": "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=300&q=80"
   }
 ]

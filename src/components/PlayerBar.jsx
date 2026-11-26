@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Play,
   Pause,
@@ -30,6 +30,8 @@ export default function PlayerBar({
   isRepeat,
   onToggleRepeat
 }) {
+  const [imageError, setImageError] = useState(false)
+
   if (!currentSong) {
     return (
       <footer className="fixed bottom-0 left-0 right-0 z-40 bg-[#181818] border-t border-white/5 px-4 py-3">
@@ -75,14 +77,25 @@ export default function PlayerBar({
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-3 sm:gap-6">
-        {/* Left Section: Current Song Info */}
+        {/* Left Section: Current Song Info with Image */}
         <div className="flex items-center gap-3.5 min-w-0 max-w-[200px] sm:max-w-[280px] flex-shrink-0">
-          <div
-            className={`w-12 h-12 rounded-lg bg-gradient-to-br ${artworkGradient} flex items-center justify-center flex-shrink-0 shadow-md border border-white/10`}
-          >
-            <span className="text-xs font-bold text-white tracking-wider">
-              {currentSong.title?.slice(0, 2).toUpperCase()}
-            </span>
+          <div className="w-12 h-12 rounded-lg bg-[#282828] overflow-hidden flex-shrink-0 shadow-md border border-white/10 relative">
+            {currentSong.coverUrl && !imageError ? (
+              <img
+                src={currentSong.coverUrl}
+                alt={currentSong.title}
+                onError={() => setImageError(true)}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div
+                className={`w-full h-full bg-gradient-to-br ${artworkGradient} flex items-center justify-center`}
+              >
+                <span className="text-xs font-bold text-white tracking-wider">
+                  {currentSong.title?.slice(0, 2).toUpperCase()}
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="min-w-0 flex-1">
@@ -99,7 +112,7 @@ export default function PlayerBar({
           </div>
         </div>
 
-        {/* Center Section: Controls & Desktop Scrubber (Spotify Signature Style) */}
+        {/* Center Section: Controls & Desktop Scrubber */}
         <div className="flex flex-col items-center justify-center flex-1 max-w-xl">
           {/* Action Buttons */}
           <div className="flex items-center gap-3 sm:gap-5">
@@ -129,7 +142,7 @@ export default function PlayerBar({
               <SkipBack size={20} fill="currentColor" />
             </button>
 
-            {/* Play / Pause Circular Button (Spotify Signature White Circle) */}
+            {/* Play / Pause Circular Button */}
             <button
               type="button"
               onClick={onTogglePlay}
