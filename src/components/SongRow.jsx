@@ -18,7 +18,7 @@ export default function SongRow({
   onMoveDown,
   canMoveUp = true,
   canMoveDown = true,
-  isDraggable = false,
+  isDraggable = true,
   onDragStart,
   onDragOver,
   onDrop,
@@ -44,10 +44,10 @@ export default function SongRow({
           : 'hover:bg-[#2a2a2a]/60 text-white'
       } ${isDragOver ? 'border-t-2 border-t-[#1ed760] bg-[#1ed760]/10' : ''}`}
     >
-      {/* Left section: drag handle (if playlist) + index / play button + cover image + title & artist */}
-      <div className="flex items-center gap-2.5 sm:gap-4 min-w-0 flex-1 mr-2">
-        {/* Drag handle on playlist mode */}
-        {mode === 'playlist' && (
+      {/* Left section: drag handle + index / play button + cover image + title & artist */}
+      <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1 mr-2">
+        {/* Drag handle */}
+        {isDraggable && (
           <div
             className="text-[#727272] hover:text-white cursor-grab active:cursor-grabbing p-1 -ml-1 transition-colors"
             title="Drag to reorder"
@@ -57,11 +57,14 @@ export default function SongRow({
         )}
 
         {/* Index or Play icon */}
-        <div className="relative w-8 h-8 flex-shrink-0 flex items-center justify-center">
+        <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0 flex items-center justify-center">
           <button
             type="button"
-            onClick={() => onPlay && onPlay(song)}
-            className="w-8 h-8 rounded-full flex items-center justify-center transition-all text-[#b3b3b3] group-hover:text-white"
+            onClick={(e) => {
+              e.stopPropagation()
+              if (onPlay) onPlay(song)
+            }}
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all text-[#b3b3b3] group-hover:text-white"
             title={isCurrentSong && isPlaying ? 'Pause' : 'Play song'}
             aria-label={isCurrentSong && isPlaying ? `Pause ${song.title}` : `Play ${song.title}`}
           >
@@ -80,7 +83,7 @@ export default function SongRow({
                 >
                   {typeof index === 'number' ? String(index + 1).padStart(2, '0') : ''}
                 </span>
-                <Play size={15} className="hidden group-hover:block translate-x-0.5" fill="currentColor" />
+                <Play size={14} className="hidden group-hover:block translate-x-0.5" fill="currentColor" />
               </>
             )}
           </button>
@@ -111,7 +114,10 @@ export default function SongRow({
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <h4
-              onClick={() => onPlay && onPlay(song)}
+              onClick={(e) => {
+                e.stopPropagation()
+                if (onPlay) onPlay(song)
+              }}
               className={`text-sm font-medium truncate cursor-pointer hover:underline transition-colors ${
                 isCurrentSong ? 'text-[#1ed760] font-semibold' : 'text-white'
               }`}
@@ -136,29 +142,64 @@ export default function SongRow({
       </div>
 
       {/* Middle section: Genre badge */}
-      <div className="hidden sm:flex items-center justify-center w-28 px-2 flex-shrink-0">
+      <div className="hidden sm:flex items-center justify-center w-24 md:w-28 px-1 flex-shrink-0">
         <Badge genre={song.genre} size="xs" />
       </div>
 
-      {/* Right section: Duration + Action Buttons */}
-      <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+      {/* Right section: Duration + Reorder (Up/Down) + Action Buttons */}
+      <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
         <span className="hidden sm:inline text-xs font-mono text-[#b3b3b3] w-12 text-right">
           {formatDuration(song.duration)}
         </span>
+
+        {/* Move Up / Down Buttons (Available in both Library & Playlist) */}
+        {(onMoveUp || onMoveDown) && (
+          <div className="flex items-center gap-0.5">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                if (canMoveUp && onMoveUp) onMoveUp(index)
+              }}
+              disabled={!canMoveUp}
+              title="Move Up"
+              aria-label="Move Up"
+              className="p-1 sm:p-1.5 rounded-full text-[#b3b3b3] hover:text-white hover:bg-white/10 disabled:opacity-20 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
+            >
+              <ChevronUp size={16} />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                if (canMoveDown && onMoveDown) onMoveDown(index)
+              }}
+              disabled={!canMoveDown}
+              title="Move Down"
+              aria-label="Move Down"
+              className="p-1 sm:p-1.5 rounded-full text-[#b3b3b3] hover:text-white hover:bg-white/10 disabled:opacity-20 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
+            >
+              <ChevronDown size={16} />
+            </button>
+          </div>
+        )}
 
         {/* Mode: Library actions (Add to Playlist button) */}
         {mode === 'library' && (
           <Button
             size="xs"
             variant={isAddedToActivePlaylist ? 'secondary' : 'primary'}
-            onClick={() => onAddToPlaylist && onAddToPlaylist(song)}
+            onClick={(e) => {
+              e.stopPropagation()
+              if (onAddToPlaylist) onAddToPlaylist(song)
+            }}
             title={
               isAddedToActivePlaylist
                 ? 'Already in selected playlist'
                 : 'Add to playlist'
             }
             icon={isAddedToActivePlaylist ? <Check size={13} className="text-[#1ed760]" /> : <Plus size={14} />}
-            className="text-xs font-semibold"
+            className="text-xs font-semibold ml-0.5"
           >
             <span className="hidden md:inline">
               {isAddedToActivePlaylist ? 'Added' : 'Add'}
@@ -166,44 +207,20 @@ export default function SongRow({
           </Button>
         )}
 
-        {/* Mode: Playlist actions (Move Up / Down buttons + Remove) */}
+        {/* Mode: Playlist actions (Remove button) */}
         {mode === 'playlist' && (
-          <div className="flex items-center gap-1">
-            {/* Move Up Button */}
-            <button
-              type="button"
-              onClick={() => onMoveUp && onMoveUp(index)}
-              disabled={!canMoveUp}
-              title="Move Up"
-              aria-label="Move Up"
-              className="p-1.5 rounded-full text-[#b3b3b3] hover:text-white hover:bg-white/10 disabled:opacity-20 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
-            >
-              <ChevronUp size={16} />
-            </button>
-
-            {/* Move Down Button */}
-            <button
-              type="button"
-              onClick={() => onMoveDown && onMoveDown(index)}
-              disabled={!canMoveDown}
-              title="Move Down"
-              aria-label="Move Down"
-              className="p-1.5 rounded-full text-[#b3b3b3] hover:text-white hover:bg-white/10 disabled:opacity-20 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors"
-            >
-              <ChevronDown size={16} />
-            </button>
-
-            {/* Remove button */}
-            <button
-              type="button"
-              onClick={() => onRemove && onRemove(song.id)}
-              title="Remove from playlist"
-              aria-label="Remove from playlist"
-              className="p-1.5 rounded-full text-[#b3b3b3] hover:text-rose-400 hover:bg-rose-950/30 transition-colors ml-0.5"
-            >
-              <Trash2 size={16} />
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              if (onRemove) onRemove(song.id)
+            }}
+            title="Remove from playlist"
+            aria-label="Remove from playlist"
+            className="p-1.5 rounded-full text-[#b3b3b3] hover:text-rose-400 hover:bg-rose-950/30 transition-colors ml-0.5"
+          >
+            <Trash2 size={16} />
+          </button>
         )}
       </div>
     </div>

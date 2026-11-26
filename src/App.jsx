@@ -283,6 +283,11 @@ export default function App() {
     )
   }
 
+  // Reorder songs in library
+  const handleReorderLibrarySongs = (newSongs) => {
+    setSongs(newSongs)
+  }
+
   const activePlaylist = playlists.find((p) => p.id === selectedPlaylistId) || null
 
   return (
@@ -315,6 +320,7 @@ export default function App() {
               setIsAddToPlaylistModalOpen(true)
             }}
             activePlaylist={activePlaylist}
+            onReorderSongs={handleReorderLibrarySongs}
           />
         )}
 

@@ -13,10 +13,13 @@ export default function SongLibrary({
   isPlaying = false,
   onPlaySong,
   onAddToPlaylist,
-  activePlaylist = null
+  activePlaylist = null,
+  onReorderSongs
 }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedGenre, setSelectedGenre] = useState('ALL')
+  const [draggedSongId, setDraggedSongId] = useState(null)
+  const [dragOverSongId, setDragOverSongId] = useState(null)
 
   // Calculate unique genres & counts
   const genres = useMemo(() => {
@@ -44,6 +47,78 @@ export default function SongLibrary({
       return matchesGenre && matchesSearch
     })
   }, [songs, searchTerm, selectedGenre])
+
+  // Reorder Handlers (Move Up / Down & Drag-and-Drop for Library)
+  const handleMoveUp = (index) => {
+    if (index <= 0 || !onReorderSongs) return
+    const targetSong = filteredSongs[index]
+    const prevSong = filteredSongs[index - 1]
+    const newSongs = [...songs]
+    const idxA = newSongs.findIndex((s) => s.id === targetSong.id)
+    const idxB = newSongs.findIndex((s) => s.id === prevSong.id)
+    if (idxA !== -1 && idxB !== -1) {
+      const temp = newSongs[idxA]
+      newSongs[idxA] = newSongs[idxB]
+      newSongs[idxB] = temp
+      onReorderSongs(newSongs)
+    }
+  }
+
+  const handleMoveDown = (index) => {
+    if (index >= filteredSongs.length - 1 || !onReorderSongs) return
+    const targetSong = filteredSongs[index]
+    const nextSong = filteredSongs[index + 1]
+    const newSongs = [...songs]
+    const idxA = newSongs.findIndex((s) => s.id === targetSong.id)
+    const idxB = newSongs.findIndex((s) => s.id === nextSong.id)
+    if (idxA !== -1 && idxB !== -1) {
+      const temp = newSongs[idxA]
+      newSongs[idxA] = newSongs[idxB]
+      newSongs[idxB] = temp
+      onReorderSongs(newSongs)
+    }
+  }
+
+  const handleDragStart = (e, songId) => {
+    setDraggedSongId(songId)
+    e.dataTransfer.setData('text/plain', songId)
+    e.dataTransfer.effectAllowed = 'move'
+  }
+
+  const handleDragOver = (e, targetSongId) => {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
+    if (dragOverSongId !== targetSongId) {
+      setDragOverSongId(targetSongId)
+    }
+  }
+
+  const handleDrop = (e, targetSongId) => {
+    e.preventDefault()
+    if (!draggedSongId || draggedSongId === targetSongId || !onReorderSongs) {
+      setDraggedSongId(null)
+      setDragOverSongId(null)
+      return
+    }
+
+    const newSongs = [...songs]
+    const fromIndex = newSongs.findIndex((s) => s.id === draggedSongId)
+    const toIndex = newSongs.findIndex((s) => s.id === targetSongId)
+
+    if (fromIndex !== -1 && toIndex !== -1) {
+      const [movedSong] = newSongs.splice(fromIndex, 1)
+      newSongs.splice(toIndex, 0, movedSong)
+      onReorderSongs(newSongs)
+    }
+
+    setDraggedSongId(null)
+    setDragOverSongId(null)
+  }
+
+  const handleDragEnd = () => {
+    setDraggedSongId(null)
+    setDragOverSongId(null)
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -175,12 +250,15 @@ export default function SongLibrary({
           </div>
         )}
 
-        {/* Song Rows */}
+        {/* Song Rows (With Up/Down and Drag and Drop Reordering!) */}
         {!isLoading &&
           !error &&
           filteredSongs.map((song, index) => {
             const isCurrentSong = currentSong?.id === song.id
             const isAddedToActive = activePlaylist?.songIds.includes(song.id)
+            const canMoveUp = index > 0
+            const canMoveDown = index < filteredSongs.length - 1
+            const isDragOver = dragOverSongId === song.id
 
             return (
               <SongRow
@@ -193,6 +271,16 @@ export default function SongLibrary({
                 mode="library"
                 onAddToPlaylist={onAddToPlaylist}
                 isAddedToActivePlaylist={isAddedToActive}
+                onMoveUp={() => handleMoveUp(index)}
+                onMoveDown={() => handleMoveDown(index)}
+                canMoveUp={canMoveUp}
+                canMoveDown={canMoveDown}
+                isDraggable={true}
+                onDragStart={(e) => handleDragStart(e, song.id)}
+                onDragOver={(e) => handleDragOver(e, song.id)}
+                onDrop={(e) => handleDrop(e, song.id)}
+                onDragEnd={handleDragEnd}
+                isDragOver={isDragOver}
               />
             )
           })}
