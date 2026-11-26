@@ -10,6 +10,7 @@ import ConfirmModal from './components/ConfirmModal'
 import AddToPlaylistModal from './components/AddToPlaylistModal'
 import Toast from './components/common/Toast'
 import { getSavedPlaylists, savePlaylists, getSavedLibraryOrder, saveLibraryOrder } from './utils/storage'
+import { audioEngine } from './utils/audioEngine'
 
 export default function App() {
   // Songs loaded from public/songs.json via Axios
@@ -111,6 +112,27 @@ export default function App() {
     fetchSongs()
   }, [])
 
+  // Synchronize audio engine with playback state
+  useEffect(() => {
+    if (isPlaying && currentSong) {
+      audioEngine.startPlayback(currentSong, currentTime)
+    } else {
+      audioEngine.pause()
+    }
+  }, [isPlaying, currentSong])
+
+  // Synchronize volume and mute with audio engine
+  useEffect(() => {
+    audioEngine.setVolume(volume, isMuted)
+  }, [volume, isMuted])
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      audioEngine.stop()
+    }
+  }, [])
+
   // Simulated player playback timer
   useEffect(() => {
     let interval = null
@@ -164,6 +186,7 @@ export default function App() {
     if (isRepeat) {
       setCurrentTime(0)
       setIsPlaying(true)
+      audioEngine.seek(currentSong, 0)
       return
     }
 
@@ -190,6 +213,7 @@ export default function App() {
     // If more than 3 seconds in, restart current song
     if (currentTime > 3) {
       setCurrentTime(0)
+      audioEngine.seek(currentSong, 0)
       return
     }
 
@@ -206,6 +230,9 @@ export default function App() {
 
   const handleSeek = (newTime) => {
     setCurrentTime(newTime)
+    if (isPlaying && currentSong) {
+      audioEngine.seek(currentSong, newTime)
+    }
   }
 
   // Play entire playlist
