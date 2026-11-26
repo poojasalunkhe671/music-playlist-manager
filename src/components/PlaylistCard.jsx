@@ -33,14 +33,14 @@ export default function PlaylistCard({
   return (
     <div
       onClick={() => onSelect && onSelect(playlist)}
-      className={`group relative flex flex-col p-4 rounded-xl cursor-pointer transition-all duration-300 ${
+      className={`group relative flex flex-col p-2.5 sm:p-4 rounded-xl cursor-pointer transition-all duration-300 ${
         isSelected
           ? 'bg-[#282828] shadow-2xl border border-white/10'
           : 'bg-[#181818] hover:bg-[#282828] border border-transparent shadow-md hover:shadow-2xl'
       }`}
     >
       {/* Artwork Thumbnail with Image & Spotify Green Quick Play button */}
-      <div className="relative aspect-square w-full rounded-lg overflow-hidden mb-3 bg-[#282828] shadow-md">
+      <div className="relative aspect-square w-full rounded-lg overflow-hidden mb-2 sm:mb-3 bg-[#282828] shadow-md">
         {topSong?.coverUrl && !imageError ? (
           <img
             src={topSong.coverUrl}
@@ -51,13 +51,13 @@ export default function PlaylistCard({
           />
         ) : (
           <div
-            className={`w-full h-full bg-gradient-to-br ${primaryGradient} flex items-center justify-center p-3 relative`}
+            className={`w-full h-full bg-gradient-to-br ${primaryGradient} flex items-center justify-center p-2 relative`}
           >
             <div className="relative z-10 flex flex-col items-center justify-center text-center">
-              <div className="w-12 h-12 rounded-2xl bg-black/20 backdrop-blur-md flex items-center justify-center text-white shadow-lg mb-1">
-                <Music size={24} />
+              <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-black/20 backdrop-blur-md flex items-center justify-center text-white shadow-lg mb-1">
+                <Music size={18} />
               </div>
-              <span className="text-[11px] font-semibold text-white/90 max-w-[120px] truncate">
+              <span className="text-[10px] sm:text-[11px] font-semibold text-white/90 max-w-[100px] truncate">
                 {playlist.name}
               </span>
             </div>
@@ -76,33 +76,35 @@ export default function PlaylistCard({
           disabled={songCount === 0}
           title={songCount === 0 ? 'Add songs first' : 'Play playlist'}
           aria-label="Play playlist"
-          className="absolute bottom-3 right-3 w-12 h-12 rounded-full bg-[#1ed760] hover:bg-[#1fdf64] hover:scale-105 active:scale-95 text-black shadow-2xl flex items-center justify-center translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 disabled:opacity-0 z-20"
+          className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-[#1ed760] hover:bg-[#1fdf64] hover:scale-105 active:scale-95 text-black shadow-2xl flex items-center justify-center translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 disabled:opacity-0 z-20"
         >
-          <Play size={20} className="translate-x-0.5" fill="currentColor" />
+          <Play size={16} className="translate-x-0.5" fill="currentColor" />
         </button>
       </div>
 
       {/* Title & Metadata */}
       <div className="flex-1 flex flex-col justify-between">
         <div>
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-between gap-1.5">
             <h3
-              className={`font-bold text-sm truncate transition-colors ${
+              className={`font-bold text-xs sm:text-sm truncate transition-colors ${
                 isSelected ? 'text-[#1ed760]' : 'text-white'
               }`}
             >
               {playlist.name}
             </h3>
             {isSelected && (
-              <span className="w-2 h-2 rounded-full bg-[#1ed760] flex-shrink-0"></span>
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#1ed760] flex-shrink-0"></span>
             )}
           </div>
 
-          <p className="text-xs text-[#b3b3b3] font-medium mt-1">{detailsText}</p>
+          <p className="text-[10px] sm:text-xs text-[#b3b3b3] font-medium mt-0.5 truncate">
+            {detailsText}
+          </p>
         </div>
 
         {/* Action icons (Rename & Delete) */}
-        <div className="flex items-center justify-end gap-1 mt-3 pt-2.5 border-t border-white/5">
+        <div className="flex items-center justify-end gap-1 mt-2 sm:mt-3 pt-2 border-t border-white/5">
           <Button
             size="xs"
             variant="ghost"
@@ -111,10 +113,10 @@ export default function PlaylistCard({
               onRename && onRename(playlist)
             }}
             title="Rename playlist"
-            className="text-[#b3b3b3] hover:text-white px-2 py-1"
-            icon={<Edit2 size={13} />}
+            className="text-[#b3b3b3] hover:text-white px-1.5 py-0.5 sm:px-2 sm:py-1 text-[11px]"
+            icon={<Edit2 size={12} />}
           >
-            <span className="text-xs">Rename</span>
+            <span className="hidden sm:inline text-xs">Rename</span>
           </Button>
 
           <Button
@@ -125,10 +127,10 @@ export default function PlaylistCard({
               onDelete && onDelete(playlist)
             }}
             title="Delete playlist"
-            className="text-rose-400 hover:text-rose-300 px-2 py-1"
-            icon={<Trash2 size={13} />}
+            className="text-rose-400 hover:text-rose-300 px-1.5 py-0.5 sm:px-2 sm:py-1 text-[11px]"
+            icon={<Trash2 size={12} />}
           >
-            <span className="text-xs">Delete</span>
+            <span className="hidden sm:inline text-xs">Delete</span>
           </Button>
         </div>
       </div>
