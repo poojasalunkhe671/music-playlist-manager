@@ -20,13 +20,13 @@ export default function Input({
   return (
     <div className={`w-full flex flex-col gap-1.5 ${className}`}>
       {label && (
-        <label className="text-xs font-medium text-slate-300 flex items-center justify-between">
+        <label className="text-xs font-semibold text-[#b3b3b3] flex items-center justify-between">
           <span>
             {label}
             {required && <span className="text-rose-400 ml-1">*</span>}
           </span>
           {maxLength && (
-            <span className="text-[11px] text-slate-500">
+            <span className="text-[11px] text-[#727272]">
               {String(value || '').length}/{maxLength}
             </span>
           )}
@@ -35,7 +35,7 @@ export default function Input({
 
       <div className="relative flex items-center w-full">
         {icon && (
-          <div className="absolute left-3.5 text-slate-400 pointer-events-none flex items-center justify-center">
+          <div className="absolute left-3.5 text-[#b3b3b3] pointer-events-none flex items-center justify-center">
             {icon}
           </div>
         )}
@@ -48,13 +48,13 @@ export default function Input({
           required={required}
           autoFocus={autoFocus}
           maxLength={maxLength}
-          className={`w-full bg-slate-900/90 text-slate-100 placeholder-slate-500 rounded-xl px-3.5 py-2.5 text-sm border transition-all duration-200 outline-none
+          className={`w-full bg-[#242424] text-white placeholder-[#727272] rounded-full px-4 py-2.5 text-sm border transition-all duration-200 outline-none
             ${icon ? 'pl-10' : ''}
             ${onClear && value ? 'pr-9' : ''}
             ${
               error
-                ? 'border-rose-500 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20'
-                : 'border-slate-700/80 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 hover:border-slate-600'
+                ? 'border-rose-500 focus:border-rose-500'
+                : 'border-transparent focus:border-white/30 focus:bg-[#2a2a2a] hover:bg-[#2a2a2a]'
             }
             ${inputClassName}
           `}
@@ -65,7 +65,7 @@ export default function Input({
           <button
             type="button"
             onClick={onClear}
-            className="absolute right-3 text-slate-400 hover:text-slate-200 p-0.5 rounded-full hover:bg-slate-800 transition-colors"
+            className="absolute right-3.5 text-[#b3b3b3] hover:text-white p-0.5 rounded-full hover:bg-white/10 transition-colors"
             title="Clear input"
           >
             <X size={15} />

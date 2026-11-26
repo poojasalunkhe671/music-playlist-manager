@@ -110,12 +110,12 @@ export default function PlaylistView({
   // If no playlists exist at all
   if (playlists.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 px-4 bg-slate-900/40 rounded-2xl border border-slate-800 text-center">
-        <div className="w-16 h-16 rounded-3xl bg-indigo-950/60 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4 shadow-xl">
+      <div className="flex flex-col items-center justify-center py-16 px-4 bg-[#181818] rounded-2xl border border-white/5 text-center">
+        <div className="w-16 h-16 rounded-full bg-[#242424] text-[#1ed760] flex items-center justify-center mb-4 shadow-xl">
           <FolderPlus size={32} />
         </div>
-        <h3 className="text-lg font-semibold text-slate-100">No playlists yet</h3>
-        <p className="text-xs text-slate-400 max-w-sm mt-1 mb-6">
+        <h3 className="text-lg font-bold text-white">No playlists yet</h3>
+        <p className="text-xs text-[#b3b3b3] max-w-sm mt-1 mb-6">
           Create playlists to curate your personal soundtracks, workout mixes, and study vibes.
         </p>
         <Button
@@ -131,7 +131,7 @@ export default function PlaylistView({
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Playlist Selector Chips */}
+      {/* Playlist Selector Chips (Spotify Pills) */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none no-scrollbar">
         {playlists.map((playlist) => {
           const isSelected = selectedPlaylist?.id === playlist.id
@@ -144,10 +144,10 @@ export default function PlaylistView({
               key={playlist.id}
               type="button"
               onClick={() => onSelectPlaylist(playlist.id)}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-200 border ${
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
                 isSelected
-                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white border-violet-400/30 shadow-md shadow-indigo-600/20'
-                  : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:text-slate-200 hover:border-slate-700'
+                  ? 'bg-white text-black shadow-md'
+                  : 'bg-[#242424] text-white hover:bg-[#2a2a2a]'
               }`}
             >
               <ListMusic size={14} />
@@ -163,7 +163,7 @@ export default function PlaylistView({
         <button
           type="button"
           onClick={onCreatePlaylistRequest}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap bg-indigo-950/40 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-900/40 hover:text-indigo-200 transition-colors"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-[#242424] text-[#1ed760] hover:bg-[#2a2a2a] transition-colors"
           title="Create a new playlist"
         >
           <Plus size={14} />
@@ -171,56 +171,46 @@ export default function PlaylistView({
         </button>
       </div>
 
-      {/* Selected Playlist Hero Details Card */}
+      {/* Selected Playlist Hero Details Card (Spotify Header Style) */}
       {selectedPlaylist && (
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950/60 via-slate-900 to-slate-900/90 border border-slate-800 p-5 sm:p-6 shadow-xl">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-[#1e3a2f] via-[#181818] to-[#121212] border border-white/5 p-5 sm:p-7 shadow-2xl">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
             {/* Playlist Info */}
             <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-indigo-400 bg-indigo-950/80 px-2 py-0.5 rounded border border-indigo-500/20">
-                  Playlist
-                </span>
-                {selectedPlaylist.createdAt && (
-                  <span className="text-xs text-slate-500">
-                    Created {new Date(selectedPlaylist.createdAt).toLocaleDateString()}
-                  </span>
-                )}
-              </div>
+              <span className="text-[11px] uppercase font-bold tracking-wider text-[#b3b3b3]">
+                Playlist
+              </span>
 
-              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight truncate">
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight truncate mt-1">
                 {selectedPlaylist.name}
               </h2>
 
               {selectedPlaylist.description && (
-                <p className="text-xs text-slate-400 mt-1 max-w-xl">
+                <p className="text-xs text-[#b3b3b3] mt-2 max-w-xl">
                   {selectedPlaylist.description}
                 </p>
               )}
 
               {/* Requirement #5: show song count and total duration (e.g. "8 songs · 32 min") */}
-              <div className="flex items-center gap-2 mt-3 text-xs font-mono text-slate-300">
-                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 border border-slate-700/60 text-indigo-300 font-semibold">
-                  {detailsSummary}
-                </span>
-                <span className="text-slate-500 text-[11px] hidden sm:inline">
-                  • Drag songs or use arrow buttons to reorder
-                </span>
+              <div className="flex items-center gap-2 mt-4 text-xs text-white">
+                <span className="font-semibold">{detailsSummary}</span>
+                <span className="text-[#727272] hidden sm:inline">• Drag songs or use arrow buttons to reorder</span>
               </div>
             </div>
 
             {/* Actions Toolbar */}
-            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-              {/* Play Entire Playlist */}
+            <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+              {/* Play Entire Playlist - Iconic Spotify Green Action */}
               <Button
-                size="sm"
+                size="md"
                 variant="primary"
                 onClick={() => onPlayEntirePlaylist(selectedPlaylist)}
                 disabled={playlistSongs.length === 0}
-                icon={<Play size={15} fill="currentColor" />}
+                icon={<Play size={18} fill="currentColor" />}
                 title={playlistSongs.length === 0 ? 'Playlist is empty' : 'Play all songs'}
+                className="shadow-xl"
               >
-                Play All
+                Play
               </Button>
 
               {/* Rename */}
@@ -250,17 +240,17 @@ export default function PlaylistView({
       )}
 
       {/* Playlist Songs List */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
         {playlistSongs.length === 0 ? (
-          /* Empty Playlist State (Required by PDF) */
-          <div className="text-center py-14 px-4 bg-slate-900/30 rounded-2xl border border-slate-800/60 flex flex-col items-center justify-center">
-            <div className="w-14 h-14 rounded-2xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-center text-slate-400 mb-3">
-              <Sparkles size={26} className="text-indigo-400" />
+          /* Empty Playlist State */
+          <div className="text-center py-14 px-4 bg-[#181818] rounded-2xl border border-white/5 flex flex-col items-center justify-center">
+            <div className="w-14 h-14 rounded-full bg-[#242424] flex items-center justify-center text-[#1ed760] mb-3">
+              <Sparkles size={26} />
             </div>
-            <h3 className="text-base font-semibold text-slate-200">
+            <h3 className="text-base font-bold text-white">
               This playlist is empty
             </h3>
-            <p className="text-xs text-slate-400 max-w-sm mt-1 mb-5">
+            <p className="text-xs text-[#b3b3b3] max-w-sm mt-1 mb-5">
               Add some tracks from the Song Library to get the music flowing!
             </p>
             <Button

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Plus, FolderPlus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import PlaylistCard from './PlaylistCard'
 import Button from './common/Button'
 
@@ -18,10 +18,10 @@ export default function PlaylistsOverview({
       {/* Header with Title and Create Button */}
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Your Playlists
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#b3b3b3] mt-1">
             Curated collections saved locally to your device
           </p>
         </div>
@@ -41,15 +41,15 @@ export default function PlaylistsOverview({
         {/* Create New Card Placeholder */}
         <div
           onClick={onCreatePlaylistRequest}
-          className="group flex flex-col items-center justify-center p-6 rounded-2xl border-2 border-dashed border-slate-800 hover:border-indigo-500/50 bg-slate-900/30 hover:bg-indigo-950/20 cursor-pointer transition-all duration-300 min-h-[220px] text-center"
+          className="group flex flex-col items-center justify-center p-6 rounded-xl border border-dashed border-[#404040] hover:border-[#1ed760] bg-[#181818]/60 hover:bg-[#282828] cursor-pointer transition-all duration-300 min-h-[220px] text-center"
         >
-          <div className="w-12 h-12 rounded-2xl bg-slate-800/80 group-hover:bg-indigo-600/20 text-slate-400 group-hover:text-indigo-400 border border-slate-700/80 group-hover:border-indigo-500/30 flex items-center justify-center mb-3 transition-colors">
+          <div className="w-12 h-12 rounded-full bg-[#242424] group-hover:bg-[#1ed760] text-[#b3b3b3] group-hover:text-black flex items-center justify-center mb-3 transition-colors shadow-md">
             <Plus size={22} />
           </div>
-          <h4 className="text-sm font-semibold text-slate-200 group-hover:text-white">
+          <h4 className="text-sm font-bold text-white">
             Create Playlist
           </h4>
-          <p className="text-xs text-slate-500 max-w-[150px] mt-1">
+          <p className="text-xs text-[#b3b3b3] max-w-[150px] mt-1">
             Build a unique soundtrack for any mood
           </p>
         </div>

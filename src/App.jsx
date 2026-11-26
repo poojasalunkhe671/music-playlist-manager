@@ -286,7 +286,7 @@ export default function App() {
   const activePlaylist = playlists.find((p) => p.id === selectedPlaylistId) || null
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col selection:bg-indigo-600 selection:text-white">
+    <div className="min-h-screen bg-[#121212] text-white flex flex-col selection:bg-[#1ed760] selection:text-black">
       {/* Top Navigation Bar */}
       <Header
         activeTab={activeTab}
