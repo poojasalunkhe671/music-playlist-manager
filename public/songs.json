@@ -1,0 +1,146 @@
+[
+  {
+    "id": "song-1",
+    "title": "Midnight City Lights",
+    "artist": "Nova Horizon",
+    "genre": "Synthwave",
+    "duration": 224,
+    "album": "Neon Dreams",
+    "gradient": "from-purple-500 to-indigo-600"
+  },
+  {
+    "id": "song-2",
+    "title": "Coffee at Dawn",
+    "artist": "Luna & The Cloud",
+    "genre": "Lo-Fi",
+    "duration": 168,
+    "album": "Morning Drizzle",
+    "gradient": "from-amber-500 to-rose-500"
+  },
+  {
+    "id": "song-3",
+    "title": "Electric Euphoria",
+    "artist": "Kroma",
+    "genre": "Electronic",
+    "duration": 252,
+    "album": "Kinetic Waves",
+    "gradient": "from-cyan-400 to-blue-600"
+  },
+  {
+    "id": "song-4",
+    "title": "Velvet Rain",
+    "artist": "Aria Brooks",
+    "genre": "R&B",
+    "duration": 195,
+    "album": "Soul Reflections",
+    "gradient": "from-pink-500 to-rose-700"
+  },
+  {
+    "id": "song-5",
+    "title": "Mountain Echoes",
+    "artist": "The Wildwood Collective",
+    "genre": "Indie",
+    "duration": 240,
+    "album": "Northern Tales",
+    "gradient": "from-emerald-400 to-teal-700"
+  },
+  {
+    "id": "song-6",
+    "title": "Starlight Odyssey",
+    "artist": "Cosmic Voyager",
+    "genre": "Synthwave",
+    "duration": 286,
+    "album": "Orbit 9",
+    "gradient": "from-violet-600 to-fuchsia-600"
+  },
+  {
+    "id": "song-7",
+    "title": "Golden Hour Mirage",
+    "artist": "Solaris Echo",
+    "genre": "Pop",
+    "duration": 210,
+    "album": "Sunburst",
+    "gradient": "from-yellow-400 to-orange-600"
+  },
+  {
+    "id": "song-8",
+    "title": "Blue Note Boulevard",
+    "artist": "Miles & Quartet",
+    "genre": "Jazz",
+    "duration": 315,
+    "album": "Late Night in Harlem",
+    "gradient": "from-blue-600 to-indigo-900"
+  },
+  {
+    "id": "song-9",
+    "title": "Thunder Highway",
+    "artist": "Apex Drive",
+    "genre": "Rock",
+    "duration": 234,
+    "album": "Redline",
+    "gradient": "from-red-600 to-amber-700"
+  },
+  {
+    "id": "song-10",
+    "title": "Deep Space Ambient",
+    "artist": "Nebula Mind",
+    "genre": "Ambient",
+    "duration": 340,
+    "album": "Void Reverie",
+    "gradient": "from-slate-700 to-cyan-900"
+  },
+  {
+    "id": "song-11",
+    "title": "Cherry Blossom Waltz",
+    "artist": "Kyoto Strings",
+    "genre": "Classical",
+    "duration": 182,
+    "album": "Seasons in Bloom",
+    "gradient": "from-rose-300 to-pink-600"
+  },
+  {
+    "id": "song-12",
+    "title": "After Hours Groove",
+    "artist": "The Velvet Keys",
+    "genre": "R&B",
+    "duration": 218,
+    "album": "Dusk & Honey",
+    "gradient": "from-fuchsia-500 to-purple-800"
+  },
+  {
+    "id": "song-13",
+    "title": "Subway Vinyl",
+    "artist": "Lo-Fi Beats Collective",
+    "genre": "Lo-Fi",
+    "duration": 154,
+    "album": "Study Sessions Vol. 4",
+    "gradient": "from-stone-500 to-orange-700"
+  },
+  {
+    "id": "song-14",
+    "title": "Hyperdrive Symphony",
+    "artist": "Pulse Vector",
+    "genre": "Electronic",
+    "duration": 270,
+    "album": "Sub-Atomic",
+    "gradient": "from-teal-400 to-blue-700"
+  },
+  {
+    "id": "song-15",
+    "title": "Desert Moon Acoustic",
+    "artist": "Sienna Ray",
+    "genre": "Indie",
+    "duration": 205,
+    "album": "Canyon Shadows",
+    "gradient": "from-orange-400 to-stone-700"
+  },
+  {
+    "id": "song-16",
+    "title": "Neon Sunset",
+    "artist": "RetroWave Pioneers",
+    "genre": "Synthwave",
+    "duration": 242,
+    "album": "1984 Drive",
+    "gradient": "from-pink-600 to-purple-900"
+  }
+]
