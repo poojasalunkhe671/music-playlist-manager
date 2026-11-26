@@ -397,6 +397,11 @@ export default function App() {
         onToggleShuffle={() => setIsShuffle((prev) => !prev)}
         isRepeat={isRepeat}
         onToggleRepeat={() => setIsRepeat((prev) => !prev)}
+        activePlaylistName={activePlaylist ? activePlaylist.name : 'Song Library'}
+        onAddToPlaylist={(song) => {
+          setSongToAddToPlaylist(song)
+          setIsAddToPlaylistModalOpen(true)
+        }}
       />
 
       {/* Create / Rename Playlist Modal */}
