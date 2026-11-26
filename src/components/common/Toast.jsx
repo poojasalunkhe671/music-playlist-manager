@@ -17,7 +17,7 @@ export default function Toast({ toast, onDismiss }) {
   }
 
   return (
-    <div className="fixed bottom-24 right-4 z-50 max-w-sm w-full transition-all duration-300 animate-slideUp">
+    <div className="fixed bottom-20 sm:bottom-24 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm z-50 transition-all duration-300 animate-slideUp">
       <div
         className={`flex items-center justify-between p-3.5 rounded-xl border backdrop-blur-md shadow-xl text-slate-100 ${
           borderColors[toast.type] || borderColors.info
